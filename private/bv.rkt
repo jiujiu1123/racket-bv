@@ -30,6 +30,8 @@
  (contract-out
   ;; Returns a predicate that recognizes bitvectors of a given size
   [rename make-bitvector bitvector (natural-number/c . -> . bitvector?)]
+  ;;size for a Bitvector
+  [bv-size (bv? . -> . natural-number/c)]
   ;; Alias for bv?
   [bv? (any/c . -> . boolean?)]
   ;; Zero predicate
@@ -281,6 +283,11 @@
      (make-bv (bitwise-and val (bitmask s)) t)]
     [(val s)
      (make-bv (bitwise-and val (bitmask s)) (make-bitvector s))]))
+
+(define/match  (bv-size bv)
+  [((sbv v1 (bitvector s1)))
+   s1])
+
 
 (define/match (bveq bv1 bv2)
   [((sbv v1 (bitvector s1)) (sbv v2 (bitvector s2)))
